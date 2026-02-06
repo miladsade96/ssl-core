@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CallGatewayController {
 
-    @GetMapping("/call-gateway")
+    @GetMapping("/call-gateway-from-core")
     public ResponseEntity<String> callGateway() {
         return new ResponseEntity<>("Gateway server has been called.", HttpStatus.OK);
     }
