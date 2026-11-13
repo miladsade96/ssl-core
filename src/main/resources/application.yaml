@@ -1,5 +1,21 @@
 spring:
   application:
     name: ssl-core
+
 server:
   port: 8080
+  # No SSL on the inbound side - frontend connects via regular HTTP/HTTPS
+  # Or if you want HTTPS for frontend, configure it without client-auth
+
+gateway:
+  url: https://localhost:8090
+  ssl:
+    key-store: classpath:core-keystore.jks
+    key-store-password: core-pass
+    trust-store: classpath:core-truststore.jks
+    trust-store-password: truststore-pass
+
+logging:
+  level:
+    org.springframework.web.client: DEBUG
+    org.apache.http: DEBUG

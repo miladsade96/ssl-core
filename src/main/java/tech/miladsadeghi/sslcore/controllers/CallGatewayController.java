@@ -1,15 +1,23 @@
 package tech.miladsadeghi.sslcore.controllers;
 
-import org.springframework.http.HttpStatus;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import tech.miladsadeghi.sslcore.services.GatewayClientService;
+
+import java.util.Map;
 
 @RestController
+@AllArgsConstructor
 public class CallGatewayController {
 
-    @GetMapping("/call-gateway-from-core")
-    public ResponseEntity<String> callGateway() {
-        return new ResponseEntity<>("Gateway server has been called.", HttpStatus.OK);
+    private final GatewayClientService gatewayClient;
+
+    @PostMapping("/call-gateway-from-core")
+    public ResponseEntity<String> testGatewayCall(@RequestBody Map<String, Integer> requestBody) {
+        String response = gatewayClient.callOtherMicroservice("/gateway-health-check", requestBody);
+        return ResponseEntity.ok(response);
     }
 }
